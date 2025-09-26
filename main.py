@@ -3,7 +3,6 @@ import ntptime
 import time
 from machine import Pin
 
-# Replace with your Wi-Fi credentials
 ssid = "ssid"
 password = "password"
 
@@ -28,7 +27,7 @@ led.off()
 
 # Sync time with NTP server
 try:
-    ntptime.settime()  # This will set the time to UTC
+    ntptime.settime()  
     print("Time synced with NTP server")
 except:
     print("Failed to sync time")
@@ -37,7 +36,7 @@ led.on()
 time.sleep(2)
 led.off()
 
-# Adjust to local timezone (optional, example for UTC-5)
+
 local_offset_hours = -5
 local_time = time.localtime(time.time() + local_offset_hours * 3600)
 print("Local time:", local_time)
@@ -47,10 +46,8 @@ pump = Pin(20, Pin.OUT)
 sensor = Pin(16, Pin.IN)
 
 while True:
-    # Update time and extract the hour
     current_time = time.localtime(time.time() + local_offset_hours * 3600)
     hour = current_time[3]
-    # Control pump based on sensor and hour
     if (sensor.value() == 1) and (8 < hour <= 20):
         pump.value(1)
         time.sleep(5)
